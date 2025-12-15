@@ -1,0 +1,514 @@
+<!DOCTYPE html>
+<html lang="tr">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Fırat Asistan | Tam Kontrol</title>
+
+    <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/styles/github-dark.min.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/highlight.min.js"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+
+    <style>
+        :root {
+            --sidebar-bg: #202123;
+            --main-bg: #343541;
+            --user-msg-bg: #40414f;
+            --ai-msg-bg: #444654;
+            --text-color: #ececf1;
+            --primary-algo: #ab47bc;
+            --primary-bbg: #26a69a;
+        }
+
+        body {
+            font-family: 'Segoe UI', sans-serif;
+            background-color: var(--main-bg);
+            color: var(--text-color);
+            display: flex;
+            height: 100vh;
+            margin: 0;
+            overflow: hidden;
+        }
+
+        /* --- SOL PANEL --- */
+        .sidebar {
+            width: 260px;
+            background-color: var(--sidebar-bg);
+            display: flex;
+            flex-direction: column;
+            padding: 10px;
+            border-right: 1px solid #444;
+            transition: width 0.3s;
+        }
+
+        .new-chat-btn {
+            border: 1px solid #565869;
+            border-radius: 5px;
+            padding: 12px;
+            background: transparent;
+            color: white;
+            cursor: pointer;
+            text-align: left;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            transition: 0.3s;
+            margin-bottom: 15px;
+        }
+
+        .new-chat-btn:hover {
+            background-color: #2b2c2f;
+        }
+
+        .history-list {
+            flex: 1;
+            overflow-y: auto;
+            display: flex;
+            flex-direction: column;
+            gap: 5px;
+        }
+
+        .history-item {
+            padding: 10px;
+            border-radius: 5px;
+            cursor: pointer;
+            color: #ccc;
+            font-size: 0.9rem;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            transition: background 0.2s;
+        }
+
+        .history-item:hover {
+            background-color: #2a2b32;
+        }
+
+        .history-title {
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            max-width: 180px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        /* Silme Butonu (Varsayılan gizli, üstüne gelince görünür) */
+        .delete-chat-btn {
+            color: #ff5252;
+            opacity: 0;
+            transition: opacity 0.2s;
+            padding: 5px;
+        }
+
+        .history-item:hover .delete-chat-btn {
+            opacity: 1;
+        }
+
+        .delete-chat-btn:hover {
+            color: #ff0000;
+            transform: scale(1.1);
+        }
+
+        /* Tümünü Sil Butonu */
+        .clear-all-btn {
+            margin-top: 10px;
+            padding: 10px;
+            color: #ccc;
+            background: transparent;
+            border: none;
+            cursor: pointer;
+            font-size: 0.85rem;
+            border-top: 1px solid #444;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .clear-all-btn:hover {
+            color: white;
+        }
+
+        /* --- SAĞ PANEL --- */
+        .main-content {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            position: relative;
+        }
+
+        .mode-selector {
+            display: flex;
+            justify-content: center;
+            padding: 10px;
+            background-color: var(--main-bg);
+            border-bottom: 1px solid #444;
+        }
+
+        .mode-btn {
+            background: transparent;
+            border: 1px solid #565869;
+            color: #ccc;
+            padding: 8px 20px;
+            margin: 0 5px;
+            border-radius: 20px;
+            cursor: pointer;
+            font-size: 0.9rem;
+            transition: 0.3s;
+        }
+
+        .mode-btn.active-algo {
+            background-color: var(--primary-algo);
+            border-color: var(--primary-algo);
+            color: white;
+        }
+
+        .mode-btn.active-bbg {
+            background-color: var(--primary-bbg);
+            border-color: var(--primary-bbg);
+            color: white;
+        }
+
+        .chat-box {
+            flex: 1;
+            padding: 20px;
+            overflow-y: auto;
+            scroll-behavior: smooth;
+        }
+
+        .message {
+            display: flex;
+            gap: 15px;
+            padding: 20px;
+            border-bottom: 1px solid rgba(0, 0, 0, 0.1);
+            max-width: 800px;
+            margin: 0 auto;
+        }
+
+        .message.user-message {
+            background-color: var(--user-msg-bg);
+        }
+
+        .message.ai-message {
+            background-color: var(--ai-msg-bg);
+        }
+
+        .avatar {
+            width: 30px;
+            height: 30px;
+            border-radius: 5px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: bold;
+            flex-shrink: 0;
+        }
+
+        .avatar.user {
+            background: #5436da;
+            color: white;
+        }
+
+        .avatar.ai {
+            background: #19c37d;
+            color: white;
+        }
+
+        .msg-content {
+            flex: 1;
+            line-height: 1.6;
+            overflow-x: hidden;
+        }
+
+        .msg-content pre {
+            background: black;
+            padding: 10px;
+            border-radius: 5px;
+            overflow-x: auto;
+        }
+
+        .msg-content code {
+            font-family: 'Consolas', monospace;
+        }
+
+        .msg-content h1,
+        .msg-content h2 {
+            margin-top: 0;
+        }
+
+        .input-area {
+            padding: 20px;
+            background-color: var(--main-bg);
+            border-top: 1px solid #444;
+            display: flex;
+            justify-content: center;
+        }
+
+        .input-wrapper {
+            width: 100%;
+            max-width: 800px;
+            position: relative;
+            display: flex;
+        }
+
+        input[type="text"] {
+            width: 100%;
+            padding: 15px;
+            padding-right: 50px;
+            background-color: #40414f;
+            border: 1px solid #565869;
+            border-radius: 10px;
+            color: white;
+            font-size: 1rem;
+            outline: none;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+
+        input[type="text"]:focus {
+            border-color: #19c37d;
+        }
+
+        button.send-btn {
+            position: absolute;
+            right: 10px;
+            top: 50%;
+            transform: translateY(-50%);
+            background: transparent;
+            border: none;
+            color: #ccc;
+            cursor: pointer;
+            font-size: 1.2rem;
+        }
+
+        button.send-btn:hover {
+            color: white;
+        }
+    </style>
+</head>
+
+<body>
+
+    <div class="sidebar" id="sidebar">
+        <button class="new-chat-btn" onclick="startNewChat()">
+            <i class="fas fa-plus"></i> Yeni Sohbet
+        </button>
+
+        <div style="font-size:0.8rem; color:#777; margin: 10px 0;">GEÇMİŞ SOHBETLER</div>
+        <div class="history-list" id="historyList">
+        </div>
+
+        <button class="clear-all-btn" onclick="clearAllHistory()">
+            <i class="fas fa-trash-alt"></i> Tüm Geçmişi Sil
+        </button>
+    </div>
+
+    <div class="main-content">
+
+        <div class="mode-selector">
+            <button class="mode-btn active-algo" onclick="setMode('algo')" id="btn-algo">☕ Algoritma</button>
+            <button class="mode-btn" onclick="setMode('bbg')" id="btn-bbg">💾 BBG</button>
+        </div>
+
+        <div class="chat-box" id="chatBox">
+            <div class="message ai-message">
+                <div class="avatar ai" id="ai-avatar-color">AI</div>
+                <div class="msg-content">
+                    Merhaba! Ben Fırat Asistan. Geçmiş sohbetlerini yönetebilirsin. Başlayalım mı?
+                </div>
+            </div>
+        </div>
+
+        <div class="input-area">
+            <div class="input-wrapper">
+                <input type="text" id="userInput" placeholder="Sorunu buraya yaz..." onkeypress="handleEnter(event)">
+                <button class="send-btn" onclick="sendMessage()"><i class="fas fa-paper-plane"></i></button>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        let currentMode = 'algo';
+        let currentChatId = Date.now();
+        let chats = JSON.parse(localStorage.getItem('firat_chats')) || [];
+
+        marked.setOptions({
+            highlight: function (code, lang) {
+                const language = hljs.getLanguage(lang) ? lang : 'plaintext';
+                return hljs.highlight(code, { language }).value;
+            }
+        });
+
+        renderHistory();
+
+        function setMode(mode) {
+            currentMode = mode;
+            document.getElementById('btn-algo').className = 'mode-btn';
+            document.getElementById('btn-bbg').className = 'mode-btn';
+            const avatar = document.getElementById('ai-avatar-color');
+
+            if (mode === 'algo') {
+                document.getElementById('btn-algo').classList.add('active-algo');
+                avatar.style.background = "var(--primary-algo)";
+            } else {
+                document.getElementById('btn-bbg').classList.add('active-bbg');
+                avatar.style.background = "var(--primary-bbg)";
+            }
+        }
+
+        function startNewChat() {
+            currentChatId = Date.now();
+            document.getElementById('chatBox').innerHTML = `
+            <div class="message ai-message">
+                <div class="avatar ai" style="background:${currentMode === 'algo' ? 'var(--primary-algo)' : 'var(--primary-bbg)'}">AI</div>
+                <div class="msg-content">Yeni sayfa! Nereden devam edelim? 🚀</div>
+            </div>`;
+        }
+
+        async function sendMessage() {
+            const inputField = document.getElementById('userInput');
+            const chatBox = document.getElementById('chatBox');
+            const message = inputField.value.trim();
+
+            if (message === "") return;
+
+            appendMessage('user', message);
+            inputField.value = "";
+
+            saveToHistory(message, 'user');
+
+            const loadingDiv = document.createElement('div');
+            loadingDiv.className = 'message ai-message';
+            loadingDiv.id = 'loading';
+            loadingDiv.innerHTML = `<div class="avatar ai">...</div><div class="msg-content">Yazıyor...</div>`;
+            chatBox.appendChild(loadingDiv);
+            chatBox.scrollTop = chatBox.scrollHeight;
+
+            try {
+                const response = await fetch('/sor', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ message: message, mode: currentMode })
+                });
+
+                const data = await response.json();
+                document.getElementById('loading').remove();
+
+                appendMessage('ai', data.response);
+                saveToHistory(data.response, 'ai');
+
+            } catch (error) {
+                document.getElementById('loading').innerText = "Hata oluştu.";
+            }
+        }
+
+        function appendMessage(sender, text) {
+            const chatBox = document.getElementById('chatBox');
+            const isUser = sender === 'user';
+            const avatarClass = isUser ? 'user' : 'ai';
+            const avatarText = isUser ? 'SEN' : 'AI';
+            const color = (!isUser && currentMode === 'algo') ? 'var(--primary-algo)' : (!isUser ? 'var(--primary-bbg)' : '#5436da');
+            const content = isUser ? text : marked.parse(text);
+
+            const msgHTML = `
+            <div class="message ${isUser ? 'user-message' : 'ai-message'}">
+                <div class="avatar ${avatarClass}" style="background:${color}">${avatarText}</div>
+                <div class="msg-content">${content}</div>
+            </div>
+        `;
+
+            chatBox.innerHTML += msgHTML;
+            document.querySelectorAll('pre code').forEach((block) => { hljs.highlightElement(block); });
+            chatBox.scrollTop = chatBox.scrollHeight;
+        }
+
+        // --- GEÇMİŞ YÖNETİMİ ---
+
+        function saveToHistory(text, sender) {
+            let chat = chats.find(c => c.id === currentChatId);
+
+            if (!chat) {
+                chat = {
+                    id: currentChatId,
+                    title: text.substring(0, 20) + "...",
+                    messages: []
+                };
+                chats.unshift(chat);
+            }
+            chat.messages.push({ sender, text });
+            localStorage.setItem('firat_chats', JSON.stringify(chats));
+            renderHistory();
+        }
+
+        function renderHistory() {
+            const list = document.getElementById('historyList');
+            list.innerHTML = "";
+
+            if (chats.length === 0) {
+                list.innerHTML = "<div style='text-align:center; padding:10px; color:#555;'>Henüz geçmiş yok.</div>";
+                return;
+            }
+
+            chats.forEach(chat => {
+                // Her sohbet için satır oluştur
+                // 'event.stopPropagation()' silme butonuna basınca sohbeti açmayı engeller.
+                list.innerHTML += `
+                <div class="history-item" onclick="loadChat(${chat.id})">
+                    <div class="history-title">
+                        <i class="far fa-comments"></i> ${chat.title}
+                    </div>
+                    <i class="fas fa-trash delete-chat-btn" onclick="deleteChat(${chat.id}, event)" title="Sohbeti Sil"></i>
+                </div>
+            `;
+            });
+        }
+
+        function loadChat(id) {
+            currentChatId = id;
+            const chat = chats.find(c => c.id === id);
+            if (!chat) return;
+
+            const chatBox = document.getElementById('chatBox');
+            chatBox.innerHTML = "";
+            chat.messages.forEach(msg => {
+                appendMessage(msg.sender, msg.text);
+            });
+        }
+
+        // --- YENİ SİLME FONKSİYONLARI ---
+
+        function deleteChat(id, event) {
+            event.stopPropagation(); // Sohbetin açılmasını engelle
+            if (!confirm("Bu sohbeti silmek istediğine emin misin?")) return;
+
+            // Listeden çıkar
+            chats = chats.filter(c => c.id !== id);
+            localStorage.setItem('firat_chats', JSON.stringify(chats));
+
+            // Eğer sildiğimiz sohbet şu an açıksa, ekranı temizle
+            if (currentChatId === id) {
+                startNewChat();
+            }
+
+            renderHistory();
+        }
+
+        function clearAllHistory() {
+            if (!confirm("TÜM geçmiş silinecek! Emin misin?")) return;
+
+            chats = [];
+            localStorage.removeItem('firat_chats');
+            startNewChat();
+            renderHistory();
+        }
+
+        function handleEnter(event) {
+            if (event.key === 'Enter') sendMessage();
+        }
+    </script>
+
+</body>
+
+</html>
