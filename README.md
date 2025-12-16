@@ -7,7 +7,7 @@
 
 **Fırat Assistant** is a specialized, web-based AI mentor designed for Software Engineering students. Unlike generic chatbots, it features **Context Switching** capabilities, allowing it to act as a **Senior Java Mentor** for programming tasks or a **Theoretical Academic** for Computer Science fundamentals.
 
-🔗 **Live Demo:** [https://ders-asistani.onrender.com](https://ders-asistani.onrender.com)
+🔗 **Live Demo:** [https://dersasistani.onrender.com](https://dersasistani.onrender.com)
 
 ---
 
