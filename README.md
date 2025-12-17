@@ -2,7 +2,7 @@
 
 ![Python](https://img.shields.io/badge/Python-3.10%2B-blue)
 ![Flask](https://img.shields.io/badge/Flask-Web%20Framework-lightgrey)
-![Gemini AI](https://img.shields.io/badge/Google-Gemini%20API-orange)
+![Groq AI](https://img.shields.io/badge/Groq-API-orange)
 ![Deploy](https://img.shields.io/badge/Deploy-Render-success)
 
 **Fırat Assistant** is a specialized, web-based AI mentor designed for Software Engineering students. Unlike generic chatbots, it features **Context Switching** capabilities, allowing it to act as a **Senior Java Mentor** for programming tasks or a **Theoretical Academic** for Computer Science fundamentals.
