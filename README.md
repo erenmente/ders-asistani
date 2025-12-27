@@ -28,7 +28,7 @@
 ## 🛠️ Tech Stack
 
 * **Backend:** Python, Flask
-* **AI Engine:** Google Gemini API (Generative AI)
+* **AI Engine:** groq API
 * **Frontend:** HTML5, CSS3, JavaScript (Vanilla)
 * **Libraries:** `google-generativeai`, `python-dotenv`, `marked.js`, `highlight.js`
 * **Deployment:** Render (Cloud Hosting)
@@ -56,21 +56,6 @@ If you want to run this project on your local machine:
 
 git clone [https://github.com/erenmente/ders-asistan.git](https://github.com/erenmente/ders-asistan.git)
 cd ders-asistan
-
-### Install dependencies
-- pip install -r requirements.txt
-
-- Configure API Key
-
-- Create a .env file in the root directory.
-
-- Add your Google Gemini API key:
-GEMINI_API_KEY=your_api_key_here
-
-### Run the application
-python app.py
-
-- Visit http://127.0.0.1:5000 in your browser.
 
 ## 🤝 Contributing
 This project is open for educational purposes. Feel free to fork and improve!
