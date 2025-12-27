@@ -17,10 +17,6 @@
 * **☕ Algorithm Mode:** Acts as a Senior Java Developer. Focuses on Clean Code, algorithms, and practical implementation. Instead of giving direct answers, it uses the *Socratic Method* to guide the student.
 * **💾 Computer Science Mode:** Acts as an Academic Professor. Focuses on theory (Binary systems, CPU architecture, memory management) with engineering analogies.
 
-### 🛡️ Robust Backend Architecture
-* **Smart Model Selection (Failover System):** The backend dynamically checks available Google Gemini models. If the primary model is busy or rate-limited, it automatically switches to a backup model (`Gemini 2.0`, `1.5-Flash`, or `Flash-Latest`) to ensure 99.9% uptime.
-* **Auto-Retry Mechanism:** Automatically handles `429 Too Many Requests` errors without disturbing the user experience.
-
 ### 🎨 Modern Frontend Experience
 * **ChatGPT-like Interface:** Clean, responsive design with a sidebar for chat history.
 * **Local History:** Saves chat sessions securely in the browser's **LocalStorage** (No external database required).
