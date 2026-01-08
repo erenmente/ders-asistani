@@ -2,12 +2,12 @@
 
 ![Python](https://img.shields.io/badge/Python-3.10%2B-blue)
 ![Flask](https://img.shields.io/badge/Flask-Web%20Framework-lightgrey)
-![Gemini AI](https://img.shields.io/badge/Google-Gemini%20API-orange)
+![Groq AI](https://img.shields.io/badge/Groq-API-orange)
 ![Deploy](https://img.shields.io/badge/Deploy-Render-success)
 
 **Fırat Assistant** is a specialized, web-based AI mentor designed for Software Engineering students. Unlike generic chatbots, it features **Context Switching** capabilities, allowing it to act as a **Senior Java Mentor** for programming tasks or a **Theoretical Academic** for Computer Science fundamentals.
 
-🔗 **Live Demo:** [https://ders-asistani.onrender.com](https://ders-asistani.onrender.com)
+🔗 **Live Demo:** [https://dersasistani.onrender.com](https://dersasistani.onrender.com)
 
 ---
 
@@ -16,10 +16,6 @@
 ### 🧠 Dual-Mode AI Persona
 * **☕ Algorithm Mode:** Acts as a Senior Java Developer. Focuses on Clean Code, algorithms, and practical implementation. Instead of giving direct answers, it uses the *Socratic Method* to guide the student.
 * **💾 Computer Science Mode:** Acts as an Academic Professor. Focuses on theory (Binary systems, CPU architecture, memory management) with engineering analogies.
-
-### 🛡️ Robust Backend Architecture
-* **Smart Model Selection (Failover System):** The backend dynamically checks available Google Gemini models. If the primary model is busy or rate-limited, it automatically switches to a backup model (`Gemini 2.0`, `1.5-Flash`, or `Flash-Latest`) to ensure 99.9% uptime.
-* **Auto-Retry Mechanism:** Automatically handles `429 Too Many Requests` errors without disturbing the user experience.
 
 ### 🎨 Modern Frontend Experience
 * **ChatGPT-like Interface:** Clean, responsive design with a sidebar for chat history.
@@ -32,7 +28,7 @@
 ## 🛠️ Tech Stack
 
 * **Backend:** Python, Flask
-* **AI Engine:** Google Gemini API (Generative AI)
+* **AI Engine:** groq API
 * **Frontend:** HTML5, CSS3, JavaScript (Vanilla)
 * **Libraries:** `google-generativeai`, `python-dotenv`, `marked.js`, `highlight.js`
 * **Deployment:** Render (Cloud Hosting)
@@ -60,21 +56,6 @@ If you want to run this project on your local machine:
 
 git clone [https://github.com/erenmente/ders-asistan.git](https://github.com/erenmente/ders-asistan.git)
 cd ders-asistan
-
-### Install dependencies
-- pip install -r requirements.txt
-
-- Configure API Key
-
-- Create a .env file in the root directory.
-
-- Add your Google Gemini API key:
-GEMINI_API_KEY=your_api_key_here
-
-### Run the application
-python app.py
-
-- Visit http://127.0.0.1:5000 in your browser.
 
 ## 🤝 Contributing
 This project is open for educational purposes. Feel free to fork and improve!
