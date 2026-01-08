@@ -1,36 +1,13 @@
 from flask import Flask, render_template, request, jsonify
-from groq import Groq
-import os
 from dotenv import load_dotenv
+from services import AIService
 
 # 1. AYARLARI YÜKLE
 load_dotenv()
 app = Flask(__name__)
 
-API_KEY = os.getenv("GROQ_API_KEY")
-
-# Groq İstemcisini Başlat
-if not API_KEY:
-    print("⚠️ API Anahtarı bulunamadı!")
-    client = None
-else:
-    client = Groq(api_key=API_KEY)
-
-# --- SİSTEM TALİMATLARI ---
-ALGO_PROMPT = """
-Sen Fırat Üniversitesi Yazılım Mühendisliği bölümünde bir Algoritma Mentorüsün (Java Uzmanı).
-Görevin: Öğrenciye asla direkt kodu kopyala-yapıştır yapabileceği şekilde verme.
-Önce mantığı anlat, pseudocode (sözde kod) göster, ipuçları ver.
-Clean Code prensiplerine sadık kal.
-Cevaplarında bol bol emoji kullan ve samimi, motive edici bir dil kullan.
-"""
-
-BBG_PROMPT = """
-Sen Bilgisayar Bilimleri dersi veren kıdemli bir Akademisyensin.
-Görevin: Konuları (Binary sistemler, CPU mimarisi, Bellek yönetimi vb.) mühendislik formasyonuyla anlatmak.
-Günlük hayattan analojiler ve metaforlar kullan.
-Ciddi ama anlaşılır bir dil kullan.
-"""
+# Servisi Başlat
+ai_service = AIService()
 
 @app.route('/')
 def home():
@@ -39,9 +16,6 @@ def home():
 @app.route('/sor', methods=['POST'])
 def sor():
     try:
-        if not client:
-            return jsonify({'response': "Sunucu Hatası: API Anahtarı eksik."})
-
         data = request.json
         user_input = data.get('message')
         mode = data.get('mode') 
@@ -49,33 +23,14 @@ def sor():
         if not user_input:
             return jsonify({'response': "Boş mesaj."})
 
-        system_content = ALGO_PROMPT if mode == 'algo' else BBG_PROMPT
-
-        # --- GÜNCELLENMİŞ MODEL ---
-        completion = client.chat.completions.create(
-            messages=[
-                {
-                    "role": "system",
-                    "content": system_content
-                },
-                {
-                    "role": "user",
-                    "content": user_input
-                }
-            ],
-            # GÜNCEL MODEL İSMİ BURADA:
-            model="llama-3.3-70b-versatile", 
-            temperature=0.7,
-        )
-
-        ai_response = completion.choices[0].message.content
+        # Servis üzerinden cevap al
+        response = ai_service.get_response(user_input, mode)
         
-        return jsonify({'response': ai_response})
+        return jsonify({'response': response})
 
     except Exception as e:
-        error_msg = str(e)
-        print(f"❌ Groq Hatası: {error_msg}")
-        return jsonify({'response': f"Bağlantı Hatası: {error_msg}"})
+        print(f"❌ Sunucu Hatası: {str(e)}")
+        return jsonify({'response': "Sunucu tarafında bir hata oluştu."})
 
 if __name__ == '__main__':
-    app.run(host='0.0.0.0', port=5000)
+    app.run(host='0.0.0.0', port=5000, debug=True)
