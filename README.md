@@ -1,78 +1,81 @@
-# 🎓 Fırat Assistant (AI Lecture Mentor)
+# 🎓 Fırat Asistan (AI Ders Mentoru)
 
 ![Python](https://img.shields.io/badge/Python-3.10%2B-blue)
 ![Flask](https://img.shields.io/badge/Flask-Web%20Framework-lightgrey)
 ![Groq AI](https://img.shields.io/badge/Groq-API-orange)
 ![Deploy](https://img.shields.io/badge/Deploy-Render-success)
 
-**Fırat Assistant** is a specialized, web-based AI mentor designed for Software Engineering students. Unlike generic chatbots, it features **Context Switching** capabilities, allowing it to act as a **Senior Java Mentor** for programming tasks or a **Theoretical Academic** for Computer Science fundamentals.
+**Fırat Asistan**, Yazılım Mühendisliği öğrencileri için tasarlanmış web tabanlı, özelleşmiş bir Yapay Zeka mentorudur. Sıradan sohbet botlarının aksine, **Bağlam Değiştirme (Context Switching)** yeteneklerine sahiptir; bu sayede programlama görevleri için **Kıdemli Java Mentoru** veya Bilgisayar Bilimleri temelleri için **Teorik Akademisyen** gibi davranabilir.
 
-🔗 **Live Demo:** [https://dersasistani.onrender.com](https://dersasistani.onrender.com)
-
----
-
-## 🚀 Key Features
-
-### 🧠 Dual-Mode AI Persona
-* **☕ Algorithm Mode:** Acts as a Senior Java Developer. Focuses on Clean Code, algorithms, and practical implementation. Instead of giving direct answers, it uses the *Socratic Method* to guide the student.
-* **💾 Computer Science Mode:** Acts as an Academic Professor. Focuses on theory (Binary systems, CPU architecture, memory management) with engineering analogies.
-
-### 🎨 Modern Frontend Experience
-* **ChatGPT-like Interface:** Clean, responsive design with a sidebar for chat history.
-* **Local History:** Saves chat sessions securely in the browser's **LocalStorage** (No external database required).
-* **Syntax Highlighting:** Automatically formats and colors code blocks (Java, Python, etc.) using `highlight.js`.
-* **Markdown Support:** Renders rich text (bold, lists, headers) using `marked.js`.
+🔗 [Canlı Demoyu İncele](https://www.erenmente.com/firatasistan)
 
 ---
 
-## 🛠️ Tech Stack
+## 🚀 Temel Özellikler
+
+### 🧠 Çift Modlu AI Kişiliği
+
+* **☕ Algoritma Modu:** Kıdemli bir Java Geliştiricisi gibi davranır. Temiz Kod (Clean Code), algoritmalar ve pratik uygulamalara odaklanır. Doğrudan cevap vermek yerine öğrenciyi *Sokratik Yöntem* ile yönlendirir.
+* **💾 Bilgisayar Bilimleri Modu:** Akademik bir Profesör gibi davranır. Teorik konulara (İkili sistemler, CPU mimarisi, bellek yönetimi vb.) mühendislik analojileriyle odaklanır.
+
+### 🎨 Modern Arayüz Deneyimi
+
+* **ChatGPT Benzeri Arayüz:** Sohbet geçmişi kenar çubuğu ile temiz ve duyarlı tasarım.
+* **Yerel Geçmiş:** Sohbet oturumlarını tarayıcının **LocalStorage** alanında güvenli bir şekilde saklar (Harici veritabanı gerektirmez).
+* **Sözdizimi Vurgulama:** `highlight.js` kullanarak kod bloklarını (Java, Python vb.) otomatik olarak biçimlendirir ve renklendirir.
+* **Markdown Desteği:** `marked.js` kullanarak zengin metni (kalın, listeler, başlıklar) işler.
+
+---
+
+## 🛠️ Teknoloji Yığını
 
 * **Backend:** Python, Flask
-* **AI Engine:** groq API
+* **AI Motoru:** groq API
 * **Frontend:** HTML5, CSS3, JavaScript (Vanilla)
-* **Libraries:** `google-generativeai`, `python-dotenv`, `marked.js`, `highlight.js`
-* **Deployment:** Render (Cloud Hosting)
+* **Kütüphaneler:** `python-dotenv`, `marked.js`, `highlight.js`
+* **Dağıtım (Deployment):** Render (Bulut Barındırma)
 
 ---
 
-## 📂 Project Structure
+## 📂 Proje Yapısı
 
 ```bash
 Firat-Asistan/
 │
-├── static/              # CSS and Image files
+├── static/              # CSS ve Görsel dosyaları
 ├── templates/
-│   └── index.html       # Main application interface
-├── app.py               # Flask backend & AI logic
-├── requirements.txt     # Python dependencies
-├── .env                 # API Keys (Not included in repo)
-└── README.md            # Project documentation
+│   └── index.html       # Ana uygulama arayüzü
+├── app.py               # Flask backend & AI mantığı
+├── requirements.txt     # Python bağımlılıkları
+├── .env                 # API Anahtarları (Depoya dahil edilmez)
+└── README.md            # Proje dokümantasyonu
 ```
 
-## ⚙️ Installation (Run Locally)
-If you want to run this project on your local machine:
+## ⚙️ Kurulum (Yerel Çalıştırma)
 
-### Clone the repository
+Bu projeyi kendi bilgisayarınızda çalıştırmak isterseniz:
 
-git clone [https://github.com/erenmente/ders-asistan.git](https://github.com/erenmente/ders-asistan.git)
+### Depoyu Klonlayın
+
+```bash
+git clone https://github.com/erenmente/ders-asistan.git
 cd ders-asistan
+```
 
-## 🤝 Contributing
-This project is open for educational purposes. Feel free to fork and improve!
+## 🤝 Katkıda Bulunma
 
-Fork the Project
+Bu proje eğitim amaçlıdır. Fork'layıp geliştirmekten çekinmeyin!
 
-Create your Feature Branch (git checkout -b feature/NewFeature)
+1. Projeyi Fork'layın
+2. Özellik Dalınızı (Feature Branch) Oluşturun (`git checkout -b feature/YeniOzellik`)
+3. Değişikliklerinizi Commit Edin (`git commit -m 'YeniOzellik Eklendi'`)
+4. Dalınıza Push Edin (`git push origin feature/YeniOzellik`)
+5. Bir Pull Request Açın
 
-Commit your Changes (git commit -m 'Add some NewFeature')
+## 👤 Yazar
 
-Push to the Branch (git push origin feature/NewFeature)
-
-Open a Pull Request
-
-## 👤 Author
 Eren Mente
 
-Student at Fırat University - Software Engineering
+Fırat Üniversitesi - Yazılım Mühendisliği Öğrencisi
 
 GitHub: @erenmente
