@@ -17,13 +17,17 @@
 </head>
 
 <body>
+    <!-- Back to Portfolio Button -->
+    <a href="/" class="btn-back-portfolio">
+        <i class="fas fa-arrow-left"></i> Portfolyoya Dön
+    </a>
 
     <aside class="sidebar" id="sidebar">
         <div class="app-logo">
             <i class="fas fa-robot"></i> Fırat Asistan
         </div>
 
-        <button class="new-chat-btn">
+        <button class="new-chat-btn" aria-label="Yeni Sohbet Başlat">
             <i class="fas fa-plus"></i> Yeni Sohbet
         </button>
 
@@ -42,7 +46,7 @@
     </aside>
 
     <main class="main-content">
-        <button class="menu-toggle" id="menuToggle">
+        <button class="menu-toggle" id="menuToggle" aria-label="Menüyü Aç/Kapat">
             <i class="fas fa-bars"></i>
         </button>
 
@@ -67,7 +71,7 @@
         <div class="input-area">
             <div class="input-wrapper">
                 <input type="text" id="userInput" placeholder="Sorunu buraya yaz...">
-                <button class="send-btn"><i class="fas fa-paper-plane"></i></button>
+                <button class="send-btn" aria-label="Mesaj Gönder"><i class="fas fa-paper-plane"></i></button>
             </div>
         </div>
     </main>
